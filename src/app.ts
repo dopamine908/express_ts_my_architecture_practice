@@ -3,6 +3,7 @@ import path from "path";
 import express from "express";
 import {AppRouter} from "./Router/app.router";
 import cors from "cors";
+import helmet from "helmet";
 
 export class App {
 
@@ -12,6 +13,7 @@ export class App {
     constructor() {
         this.initEnv();
         this.initCors();
+        this.initHelmet();
         this.initRouter();
     }
 
@@ -29,5 +31,9 @@ export class App {
 
     private initCors() {
         this.app.use(cors());
+    }
+
+    private initHelmet() {
+        this.app.use(helmet());
     }
 }
