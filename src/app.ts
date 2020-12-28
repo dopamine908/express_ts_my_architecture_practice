@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import path from "path";
 import express from "express";
 import {AppRouter} from "./Router/app.router";
+import cors from "cors";
 
 export class App {
 
@@ -10,6 +11,7 @@ export class App {
 
     constructor() {
         this.initEnv();
+        this.initCors();
         this.initRouter();
     }
 
@@ -23,5 +25,9 @@ export class App {
 
     private initRouter() {
         this.app.use('/', this.router.router);
+    }
+
+    private initCors() {
+        this.app.use(cors());
     }
 }
