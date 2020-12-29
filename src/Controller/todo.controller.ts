@@ -10,5 +10,20 @@ export class TodoController {
             if (err) throw err;
             response.send(rows);
         });
+        mysql.connection.end();
+
+    }
+
+    //create
+    async addTodo(request: Request, response: Response, next: NextFunction) {
+        const sql_prepare = `INSERT INTO todo (name,status) VALUES(?,?)`;
+        const binding = [request.body.name, request.body.status];
+
+        const mysql = new Connector();
+        mysql.connection.query(sql_prepare, binding, (err: any, rows: any, fields: any) => {
+            if (err) throw err;
+            response.send(rows);
+        });
+        mysql.connection.end();
     }
 }

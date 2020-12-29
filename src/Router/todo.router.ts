@@ -1,5 +1,6 @@
 import {BaseRouter} from "./base.router";
 import {TodoController} from "../Controller/todo.controller";
+import express from "express";
 
 export class TodoRouter extends BaseRouter {
     private controller: TodoController;
@@ -14,9 +15,12 @@ export class TodoRouter extends BaseRouter {
             this.controller.getTodos(req, res, next);
         });
 
-        // this.router.post('/demo_body_parse', express.json(), (req, res, next) => {
-        //     res.send(JSON.stringify(req.body));
-        // });
+        this.router.post('/', express.json(), (req, res, next) => {
+            // res.send(req.body);
+            this.controller.addTodo(req, res, next);
+            // res.send(req.body);
+
+        });
     }
 
 
