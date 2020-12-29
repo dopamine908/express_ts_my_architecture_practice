@@ -15,11 +15,14 @@ export class TodoRouter extends BaseRouter {
             this.controller.getTodos(req, res, next);
         });
 
+        //create
         this.router.post('/', express.json(), (req, res, next) => {
-            // res.send(req.body);
             this.controller.addTodo(req, res, next);
-            // res.send(req.body);
+        });
 
+        //delete
+        this.router.delete('/:id', (req, res, next) => {
+            this.controller.deleteTodo(req, res, next);
         });
     }
 
