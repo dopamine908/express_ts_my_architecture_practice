@@ -27,9 +27,21 @@ export class TodoController {
         mysql.connection.end();
     }
 
-    deleteTodo(request: Request, response: Response, next: NextFunction) {
+    async deleteTodo(request: Request, response: Response, next: NextFunction) {
         const sql_prepare = `DELETE FROM todo WHERE id=?`;
         const binding = request.params.id;
+
+        const mysql = new Connector();
+        mysql.connection.query(sql_prepare, binding, (err: any, rows: any, fields: any) => {
+            if (err) throw err;
+            response.send(rows);
+        });
+        mysql.connection.end();
+    }
+
+    async updateTodo(request: Request, response: Response, next: NextFunction) {
+        const sql_prepare = `UPDATE todo SET name=? , status=? WHERE id=?`;
+        const binding = [request.body.name, request.body.status, request.params.id];
 
         const mysql = new Connector();
         mysql.connection.query(sql_prepare, binding, (err: any, rows: any, fields: any) => {

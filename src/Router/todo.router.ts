@@ -24,6 +24,11 @@ export class TodoRouter extends BaseRouter {
         this.router.delete('/:id', (req, res, next) => {
             this.controller.deleteTodo(req, res, next);
         });
+
+        //put
+        this.router.put('/:id', express.json(), (req, res, next) => {
+            this.controller.updateTodo(req, res, next);
+        })
     }
 
 
