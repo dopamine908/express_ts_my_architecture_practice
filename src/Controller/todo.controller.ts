@@ -1,12 +1,19 @@
 import {NextFunction, Request, Response} from "express";
 import {Connector} from "../Model/Connector";
+import {TodoSearchPara} from "../Service/TodoSearchPara";
+import {TodoSearchQueryBuilder} from "../Service/TodoSearchQueryBuilder";
 
 export class TodoController {
 
     async getTodos(request: Request, response: Response, next: NextFunction) {
+
+        const para = new TodoSearchPara(request);
+        const query_builder = new TodoSearchQueryBuilder();
+        query_builder.initQuery(para);
+
         const mysql = new Connector();
 
-        mysql.connection.query('SELECT * FROM `todo`', (err: any, rows: any, fields: any) => {
+        mysql.connection.query(query_builder.sql_prepare, query_builder.sql_binding, (err: any, rows: any, fields: any) => {
             if (err) throw err;
             response.send(rows);
         });
